@@ -1,0 +1,45 @@
+﻿@model IEnumerable<YAKBAKv2.Models.ClanMember>
+
+@{
+    ViewData["Title"] = "Clan Members";
+}
+
+<h1>Clan Members</h1>
+
+<p>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a asp-action="Create" class="btn btn-primary">Add New Member</a>
+    }
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>Member Name</th>
+            <th>Role</th>
+            <th>Time Joined</th>
+            <th>Clan</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var member in Model)
+        {
+            <tr>
+                <td>@member.MemberName</td>
+                <td>@member.Role</td>
+                <td>@member.TimeOfJoin</td>
+                <td>@member.Clan?.ClanName</td>
+                <td>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-action="Edit" asp-route-id="@member.MemberId" class="btn btn-sm btn-warning">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@member.MemberId" class="btn btn-sm btn-danger">Delete</a>
+                    }
+                    <a asp-action="Details" asp-route-id="@member.MemberId" class="btn btn-sm btn-info">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
